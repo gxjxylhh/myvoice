@@ -18,7 +18,7 @@ const audioList = [
   {
     title: 'Play mp3 sound from Local',
     isRequire: true,
-    url: require('./我喜欢上你时的内心活动.mp3'),
+    url: require('./music.mp3'),
   },
 ];
 
