@@ -10,8 +10,10 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "react": "16.9.0",
-    "react-native": "0.61.5"
+    "react": "^16.9.0",
+    "react-message": "^1.4.0",
+    "react-native": "^0.61.5",
+    "react-native-sound": "^0.11.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",

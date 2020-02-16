@@ -1,114 +1,166 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
-import React from 'react';
+//Example to play music in React Native
+import React, { Component } from 'react';
+//Import React
 import {
-  SafeAreaView,
   StyleSheet,
-  ScrollView,
-  View,
   Text,
-  StatusBar,
+  TouchableOpacity,
+  View,
+  ScrollView,
+  SafeAreaView,
 } from 'react-native';
+//Import basic elements we need from React Native
+import Sound from 'react-native-sound';
+//Import library for Sound Component
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+//List of the dummy sound track
+const audioList = [
+  {
+    title: 'Play mp3 sound from Local',
+    isRequire: true,
+    url: require('./我喜欢上你时的内心活动.mp3'),
+  },
+];
 
-const App: () => React$Node = () => {
-  return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
+var sound1, sound2, sound3, sound4, sound5, sound6;
+
+function playSound(item, index) {
+  if (index == 0) {
+    sound1 = new Sound(item.url, (error, sound) => {
+      if (error) {
+        alert('error' + error.message);
+        return;
+      }
+      //make sure that only 1 sound will be playing at a time
+      //below should be copied to other sound files when they will be played
+      if (global.sound) global.sound.stop();
+      global.sound = sound1;
+      sound1.play( success => { console.log('Playing') } );
+    });
+  }
+// else if (index == 1) {
+//    sound2 = new Sound(item.url, '', (error, sound) => {
+//      if (error) {
+//        alert('error' + error.message);
+//        return;
+//      }
+//      sound2.play(() => {
+//        sound2.release();
+//      });
+//    });
+//  }
+}
+
+function stopSound(item, index) {
+  if (index == 0 && sound1) {
+    sound1.stop(() => {
+      console.log('Stop');
+    });
+  }
+// else if (index == 1 && sound2) {
+//    sound2.stop(() => {
+//      console.log('Stop');
+//    });
+//  }
+}
+
+function componentWillMount(){
+  //sound1.stop();
+
+}
+
+
+function componentWillUnmount() {
+  sound1.release();
+//  sound2.release();
+
+}
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    Sound.setCategory('Playback', true); // true = mixWithOthers
+    this.state = {
+      tests: {},
+    };
+  }
+
+  render() {
+    return (
+      <SafeAreaView style={{ flex: 1 }}>
+        <View style={styles.container}>
+          <Text style={styles.headerTitle}>
+            Gift for you
+          </Text>
+          <ScrollView style={styles.container}>
+            {audioList.map((item, index) => {
+              return (
+                <View style={styles.feature} key={item.title}>
+                  <Text style={{ flex: 1, fontSize: 14 }}>{item.title}</Text>
+                  <TouchableOpacity
+                    onPress={() => {
+                      return playSound(item, index);
+                    }}>
+                    <Text style={styles.buttonPlay}>Play</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      return stopSound(item, index);
+                    }}>
+                    <Text style={styles.buttonStop}>Stop</Text>
+                  </TouchableOpacity>
+                </View>
+              );
+            })}
+          </ScrollView>
+        </View>
       </SafeAreaView>
-    </>
-  );
-};
-
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
-});
+    );
+  }
+}
 
 export default App;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  headerTitle: {
+    fontSize: 16,
+    color: 'white',
+    fontWeight: 'bold',
+    paddingVertical: 20,
+    textAlign: 'center',
+    backgroundColor: 'rgba(00,00,80,1)',
+  },
+  buttonPlay: {
+    fontSize: 16,
+    color: 'white',
+    backgroundColor: 'rgba(00,80,00,1)',
+    borderWidth: 1,
+    borderColor: 'rgba(80,80,80,0.5)',
+    overflow: 'hidden',
+    paddingHorizontal: 15,
+    paddingVertical: 7,
+  },
+  buttonStop: {
+    fontSize: 16,
+    color: 'white',
+    backgroundColor: 'rgba(80,00,00,1)',
+    borderWidth: 1,
+    borderColor: 'rgba(80,80,80,0.5)',
+    overflow: 'hidden',
+    paddingHorizontal: 15,
+    paddingVertical: 7,
+  },
+  feature: {
+    flexDirection: 'row',
+    padding: 10,
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    borderTopWidth: 1,
+    borderTopColor: 'rgb(180,180,180)',
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgb(230,230,230)',
+  },
+});
