@@ -18,7 +18,7 @@ import {GiftedChat} from 'react-native-gifted-chat'
 
 const audioList = [
     {
-        title: 'Play mp3 sound from Local',
+        title: 'Play my song from Local',
         isRequire: true,
         url: require('./music.mp3'),
     },
@@ -68,7 +68,11 @@ function stopSound(item, index) {
 //  }
 }
 
-
+const BOT_USER = {
+  _id: 2,
+  name: 'FAQ Bot',
+  avatar: './me.png'
+};
 class App extends Component {
 
 
@@ -81,24 +85,26 @@ class App extends Component {
             tests: {},
             messages:[],
         };
+        this.handleMessage = this.handleMessage.bind(this);
+        this.sendBotResponse = this.sendBotResponse.bind(this);
+
     }
 
+//    used to be componentWillMmount
+//Move code with side effects to componentDidMount, and set initial state in the constructor.
 
-     componentWillMount() {
+     componentDidMount() {
         this.setState({
             messages: [
-                {
-                    _id: 1,
-                    text: "Hello developer",
-                    createdAt: new Date(),
-                    user: {
-                        _id: 2,
-                        name: "React Native",
-                        avatar: "https://placeimg.com/140/140/any",
+                    {
+                      _id: 1,
+                      text: `Hi! I am 🤖 from Ricky\'s mind.\n\nHow may I help you with today?`,
+                      createdAt: new Date(),
+                      user: BOT_USER
                     },
-                },
             ],
         });
+        //console.log("im doing another time");
     }
 
      componentWillUnmount() {
@@ -108,11 +114,35 @@ class App extends Component {
     }
 
      onSend(messages = []) {
+     //realize that it's another client inputting, so what to do next?
         this.setState(previousState => ({
             messages: GiftedChat.append(previousState.messages, messages),
         }));
+        let message = messages[0].text;
+        //do something about message in another func
+        this.handleMessage(message);
+
     }
 
+    handleMessage(message){
+        //if this then doing that
+        //do sth about message then respond to user
+        message = "Hi, reply feature is still under development, plz wait patiently~"
+        this.sendBotResponse(message)
+    }
+
+    sendBotResponse(message){
+        let msg = {
+            _id : Math.round(Math.random() * 1000000),
+            text: message,
+            createdAt: new Date(),
+            user: BOT_USER
+
+        };
+        this.setState(previousState => ({
+             messages: GiftedChat.append(previousState.messages, [msg]),
+         }));
+    }
 
 
     render() {
@@ -148,9 +178,10 @@ class App extends Component {
                         messages={this.state.messages}
                         onSend={messages => this.onSend(messages)}
                         user={{
-                            _id: 1,
+                            _id: 1
                         }}
                     />
+
 
                 </View>
 

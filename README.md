@@ -6,16 +6,20 @@
 
 3.Cross fingers and hope it works.
 
-#Workload:
+# Workload:
 
 1.Implemented initial chatting UI according to gifted-chat
 
 2.integrate with playing sound/music locally as a feature
 
-#To Do:
+3.Implemented simple chatting bot, now bot can respond with default simple words
 
-1.Implement chatting backend maybe?(unless the structure is meant to be a single player mode :D)
+# To Do:
+1.Set multiple if statements for replying.
 
-2.Recording audios :P yes for sure!
+2.add voices for replying
 
-3.Think of new features
+3.Recording audios :P yes for sure!
+
+4.Think of new features
+
