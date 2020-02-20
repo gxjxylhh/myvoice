@@ -68,11 +68,7 @@ function stopSound(item, index) {
 //  }
 }
 
-const BOT_USER = {
-  _id: 2,
-  name: 'FAQ Bot',
-  avatar: './me.png'
-};
+
 class App extends Component {
 
 
@@ -100,7 +96,11 @@ class App extends Component {
                       _id: 1,
                       text: `Hi! I am 🤖 from Ricky\'s mind.\n\nHow may I help you with today?`,
                       createdAt: new Date(),
-                      user: BOT_USER
+                      user: {
+                              _id: 2,
+                              name: 'FAQ Bot',
+                              avatar: 'https://placeimg.com/140/140/any'
+                            },
                     },
             ],
         });
@@ -136,7 +136,11 @@ class App extends Component {
             _id : Math.round(Math.random() * 1000000),
             text: message,
             createdAt: new Date(),
-            user: BOT_USER
+            user: {
+                    _id: 2,
+                    name: 'FAQ Bot',
+                    avatar: 'https://placeimg.com/140/140/any'
+                  },
 
         };
         this.setState(previousState => ({
