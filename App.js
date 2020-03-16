@@ -178,6 +178,12 @@ class App extends Component {
                         })}
                     </ScrollView>
 
+                    <TouchableOpacity onPress={()=> alert('image clicked')}>
+
+                        <Image source={require('./sampleimage.jpg')} style = {styles.ImageClass} />
+
+                    </TouchableOpacity>
+
                     <GiftedChat
                         messages={this.state.messages}
                         onSend={messages => this.onSend(messages)}
