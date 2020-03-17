@@ -15,6 +15,8 @@ import Sound from 'react-native-sound';
 
 import {GiftedChat} from 'react-native-gifted-chat'
 
+const avatarsource=require('./xiongmaobot.png');
+
 
 const audioList = [
     {
@@ -90,17 +92,21 @@ class App extends Component {
 //Move code with side effects to componentDidMount, and set initial state in the constructor.
 
      componentDidMount() {
+
         this.setState({
+
             messages: [
+
                     {
-                      _id: 1,
-                      text: `Hi! I am 🤖 from Ricky\'s mind.\n\nHow may I help you with today?`,
-                      createdAt: new Date(),
-                      user: {
-                              _id: 2,
-                              name: 'FAQ Bot',
-                              avatar: 'https://placeimg.com/140/140/any'
-                            },
+
+                          _id: 1,
+                          text: `Hi! I am 🤖 from Ricky\'s mind.\n\nHow may I help you with today?`,
+                          createdAt: new Date(),
+                          user: {
+                                  _id: 2,
+                                  name: 'FAQ Bot',
+                                  avatar: avatarsource
+                                },
                     },
             ],
         });
@@ -127,7 +133,16 @@ class App extends Component {
     handleMessage(message){
         //if this then doing that
         //do sth about message then respond to user
-        message = "Hi, reply feature is still under development, plz wait patiently~"
+        //message as argument input can be recognized, hence we set if else to categorize
+        if(message == "来点相声"){
+            alert('相声OMW')
+        }else if(message == "来点歌曲"){
+            alert('歌曲OMW')
+        }else if(message == "来点笑话"){
+            alert('闲聊OMW')
+        }else{
+            message = "Hi, 目前只有这三样功能哦亲"
+        }
         this.sendBotResponse(message)
     }
 
@@ -139,7 +154,7 @@ class App extends Component {
             user: {
                     _id: 2,
                     name: 'FAQ Bot',
-                    avatar: 'https://placeimg.com/140/140/any'
+                    avatar: avatarsource
                   },
 
         };
@@ -178,11 +193,7 @@ class App extends Component {
                         })}
                     </ScrollView>
 
-                    <TouchableOpacity onPress={()=> alert('image clicked')}>
 
-                        <Image source={require('./sampleimage.jpg')} style = {styles.ImageClass} />
-
-                    </TouchableOpacity>
 
                     <GiftedChat
                         messages={this.state.messages}
