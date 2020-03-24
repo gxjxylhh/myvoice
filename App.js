@@ -100,7 +100,7 @@ class App extends Component {
                     {
 
                           _id: 1,
-                          text: `Hi! I am 🤖 from Ricky\'s mind.\n\nHow may I help you with today?`,
+                          text: `Hi! I am 🤖 from Ricky\'s mind.\n目前仅支持三种功能O.O\n \n请输入xiangsheng或相声，输入gequ或歌曲，输入kanshu或看书` ,
                           createdAt: new Date(),
                           user: {
                                   _id: 2,
@@ -134,15 +134,39 @@ class App extends Component {
         //if this then doing that
         //do sth about message then respond to user
         //message as argument input can be recognized, hence we set if else to categorize
-        if(message == "来点相声"){
-            alert('相声OMW')
-        }else if(message == "来点歌曲"){
-            alert('歌曲OMW')
-        }else if(message == "来点笑话"){
-            alert('闲聊OMW')
-        }else{
-            message = "Hi, 目前只有这三样功能哦亲"
+        if(this.state.messages[0].text == "想要看什么呢?给你推荐三本书吧：\n1.人生需要揭穿 \n2.行者无疆 \n3.安妮宝贝中短篇作品集"){
+            //alert(message+"thats great!!!!");
+            if(message == "1"){
+                message = 'http://book.sina.cn/dpool/newbook/bookv1/catalog.php?bid=5394793';
+            }else if(message == "2"){
+                message = 'https://www.xirenxuan.com/xingzhewujiang/';
+            }else if (message == "3"){
+                message = 'https://www.kanunu8.com/book3/7676/';
+            }
+
+
         }
+        else if(message == "xiangsheng"||message == "相声"){
+            alert('相声没录出来,凑合着听听郭德纲和抽烟喝酒烫头的于谦吧-。-');
+            message = "郭德纲于谦相声集合 \nhttp://www.520tingshu.com/book/book16888.html";
+        }else if(message == "gequ"||message == "歌曲"){
+            alert('点击最上方的play即可播放~');
+            message = "输入xiangsheng听相声，输入gequ播放我的歌，输入dushu向你推荐书单~";
+        }else if(message == "kanshu"|| message == "看书"){
+
+            message = '想要看什么呢?给你推荐三本书吧：\n1.人生需要揭穿 \n2.行者无疆 \n3.安妮宝贝中短篇作品集';
+            //alert(this.state.messages.length);
+            //alert(this.state.messages[0].text+"oho");
+
+
+        }else{
+            //temporarily do nothing
+                message = "Hi, 目前只有这三样功能哦亲,请输入xiangsheng或相声，输入gequ或歌曲，输入kanshu或看书";
+        }
+
+        //alert(this.state.messages[0].text);
+
+
         this.sendBotResponse(message)
     }
 
@@ -171,7 +195,7 @@ class App extends Component {
                     <Text style={styles.headerTitle}>
                         Gift for you
                     </Text>
-                    <ScrollView style={styles.container}>
+                    <ScrollView >
                         {audioList.map((item, index) => {
                             return (
                                 <View style={styles.feature} key={item.title}>
@@ -195,19 +219,19 @@ class App extends Component {
 
 
 
-                    <GiftedChat
-                        messages={this.state.messages}
-                        onSend={messages => this.onSend(messages)}
-                        user={{
-                            _id: 1
-                        }}
-                    />
-
+                                    <GiftedChat
+                                        messages={this.state.messages}
+                                        onSend={messages => this.onSend(messages)}
+                                        user={{
+                                            _id: 1
+                                        }}
+                                    />
 
                 </View>
 
 
             </SafeAreaView>
+
 
 
         );
